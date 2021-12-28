@@ -1,0 +1,29 @@
+function [K Distance] = link(input,d)
+% input,d -> linking matrix출력
+
+mag = @(x) sqrt(sum(x.*x)); %mag함수 정의 (익명함수:vector x의 절대값을 구함)
+[n,~]=size(input); %input 행렬의 세로크기를 n에 저장
+
+K = zeros(n); %가로세로 n의 크기를 가지는 0으로 이루어진 빈 행렬을 생성
+Distance = zeros(n);
+
+for i=1:n
+    for j=i:n
+        Distance(i,j)=mag(input(i,:)-input(j,:));
+        if(Distance(i,j)<=d)
+            K(i,j)=1;
+        else
+            K(i,j)=0;
+        end
+    end
+end
+
+Distance=Distance.'+Distance;
+K = K.'+K;
+
+
+
+
+
+end
+
