@@ -53,10 +53,12 @@ while (~feof(fid)) % 파일이 끝날 때까지 반복
         fprintf(fid_out,str_read); % output파일에 조건에 맞는 라인을 씀
         
         
-      end
+   end
 end
 
 
 
 fclose(fid);  %input파일 닫음
 fclose(fid_out);  %output파일 닫음
+
+end
