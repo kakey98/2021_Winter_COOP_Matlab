@@ -2,7 +2,13 @@
 %%%%%%%%%% last modified 22 Mar. 2018%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [data_ca] = coordi(filename)
+function [data_ca] = coordi(filename,delta)
+
+arguments
+    filename;
+    delta='0';
+end
+
 
 %pdb 파일을 불러서 해당 ca들의 좌표행렬 생성
 
@@ -31,6 +37,11 @@ while (~feof(fid)) % 파일이 끝날 때까지 반복
     if (str_read(1)=='END') %리스트 첫번째가 "END"면 루프문을 끊음
         break
     
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> Chanhyuk-Yoon
     
     elseif (str_list(1)=='ATOM' && str_list(3)=="CA" && str_list(5)=="A") % ATOM CA A chain 조건일 때 들어옴
 
@@ -39,9 +50,18 @@ while (~feof(fid)) % 파일이 끝날 때까지 반복
         z = str2double(str_list(9)); % z coordinate info
         %string을 double로 바꿈
         
+<<<<<<< HEAD
 
         temp = [x,y,z];%temp에 xyz를 저장
       
+=======
+		if(delta=='0')
+            temp = [x,y,z]; %temp에 xyz를 저장
+        else if (delta=='delta') %인수에 delta 입력시 column 행렬로 출력
+            temp = [x;y;z];
+        end
+        end
+>>>>>>> Chanhyuk-Yoon
 
 
 
@@ -51,7 +71,7 @@ while (~feof(fid)) % 파일이 끝날 때까지 반복
         fprintf(fid_out,str_read); % output파일에 조건에 맞는 라인을 씀
         
         
-    end
+      end
 end
 
 
