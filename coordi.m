@@ -2,7 +2,13 @@
 %%%%%%%%%% last modified 22 Mar. 2018%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [data_ca] = coordi(filename)
+function [data_ca] = coordi(filename,delta)
+
+arguments
+    filename;
+    delta='0';
+end
+
 
 data_ca = [];
 
@@ -10,7 +16,7 @@ data_ca = [];
 fid = fopen(filename,'r'); % input 파일 open 
 fid_out = fopen('ca.pdb','w'); % output 파일 open 
 
-while ~feof(fid) % 파일이 끝날 때까지 반복
+while (~feof(fid)) % 파일이 끝날 때까지 반복
     
     str_read = fgetl(fid); % 파일의 각 라인을 읽는 함수 사용
     n=length(str_read);  %읽은 라인의 글자수를 n에 저장
@@ -27,6 +33,7 @@ while ~feof(fid) % 파일이 끝날 때까지 반복
     if (str_read(1)=='END') %리스트 첫번째가 "END"면 루프문을 끊음
         break
     
+    
 
     
     elseif (str_list(1)=='ATOM' && str_list(3)=="CA" && str_list(5)=="A") % ATOM CA A chain 조건일 때 들어옴
@@ -35,15 +42,25 @@ while ~feof(fid) % 파일이 끝날 때까지 반복
         z = str2double(str_list(9)); % z coordinate info
         %string을 double로 바꿈
         
-		temp = [x,y,z]; %temp에 xyz를 저장
+		if(delta=='0')
+            temp = [x,y,z]; %temp에 xyz를 저장
+        else if (delta=='delta') %인수에 delta 입력시 column 행렬로 출력
+            temp = [x;y;z];
+        end
+        end
+
+
+
         data_ca=[data_ca;temp]; %원래 data_ca와 temp를 합쳐 새로운 data_ca를 만듬
         
         str_read = sprintf('%s\n', str_read); % 각 라인에 엔터 추가
         fprintf(fid_out,str_read); % output파일에 조건에 맞는 라인을 씀
         
         
-    end
+      end
 end
+
+
 
 fclose(fid);  %input파일 닫음
 fclose(fid_out);  %output파일 닫음
