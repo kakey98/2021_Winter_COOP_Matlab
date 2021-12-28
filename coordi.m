@@ -3,10 +3,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [data_ca] = coordi(filename)
-
-
-
-
 %pdb 파일을 불러서 해당 ca들의 좌표행렬 생성
 
 
@@ -50,12 +46,6 @@ while (~feof(fid)) % 파일이 끝날 때까지 반복
 
         temp = [x,y,z];%temp에 xyz를 저장
       
-
-	
-            temp = [x,y,z]; %temp에 xyz를 저장
-        
-
-
 
         data_ca=[data_ca;temp]; %원래 data_ca와 temp를 합쳐 새로운 data_ca를 만듬
         
