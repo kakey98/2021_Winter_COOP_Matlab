@@ -1,5 +1,5 @@
-M = coordi('4ake.pdb');
-[K distance] = link(M,6);
-linkGraph(M,K);
+data_ca = coordi('4ake.pdb');
 
+k1 = linkmaker(data_ca,7);
+linkGraph(data_ca,k1);
 
