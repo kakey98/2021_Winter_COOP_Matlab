@@ -21,7 +21,7 @@ for i=1:n-1
 end
 
 
-k1 = k1'+k1;
+k1 = k1.'+k1;
 
 
 end

@@ -1,4 +1,4 @@
-function [K] = nma(k1,data_ca)
+function [K, d, v] = nma(k1,data_ca)
 k=k1;
 
 [m,~]=size(k);
@@ -13,15 +13,15 @@ for i=1:m-1
 
         else %linking이 1일시 
             delta = data_ca(i,:)-data_ca(j,:); %delta를 벡터간 차라고 둠
-            G1(3*i-2:3*i,3*j-2:3*j)=(delta'*delta)/(delta*delta.'); %계산
+            G1(3*i-2:3*i,3*j-2:3*j)=(delta.'*delta)/(delta*delta.'); %계산
             
         end
     end
 end
 
-G1 = G1'+G1; %transpose로 대칭
+G1 = G1.'+G1; %transpose로 대칭
 
-% G1을 통한 K 생성 부분입니다. 논문 수식 이용하여 직접 해보시면 좋을 것 같습니다.
+% G1을 통한 K 생성 부분
 for i=1:m
 K(3*i-2:3*i,:) = -G1(3*i-2:3*i,:); %K의 i번째 행렬을 모두 -G의 i번째 행렬로 전환
 temp = zeros(3); %temp값 초기화
@@ -32,6 +32,8 @@ temp = zeros(3); %temp값 초기화
 K(3*i-2:3*i,3*i-2:3*i) =  temp; %완성된 temp값을 K의 대각선에 대입
 end
 
+[v,d]=eig(K);
+d=diag(d);
 
 
 end
